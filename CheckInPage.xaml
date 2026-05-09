@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project.CheckInPage"
+             BackgroundColor="#F3F6FB"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- Hero Header -->
+            <Grid HeightRequest="185"
+                  Padding="26,28,26,24">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1E3A5F" Offset="0.0"/>
+                        <GradientStop Color="#2563EB" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <VerticalStackLayout Spacing="8"
+                                     VerticalOptions="Center">
+
+                    <Label Text="GPS Check-in"
+                           FontSize="34"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Label Text="Verify your classroom location before attendance."
+                           FontSize="15"
+                           TextColor="#EAF2FF"/>
+
+                    <Frame BackgroundColor="#EAF2FF"
+                           CornerRadius="18"
+                           Padding="12,8"
+                           HasShadow="False"
+                           HorizontalOptions="Start">
+
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="●"
+                                   TextColor="#22C55E"
+                                   FontSize="14"
+                                   VerticalOptions="Center"/>
+
+                            <Label Text="Location Verified"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Main Content -->
+            <VerticalStackLayout Padding="24,24,24,42"
+                                 Spacing="18"
+                                 Margin="0,-42,0,0">
+
+                <!-- Current Class Card -->
+                <Frame BackgroundColor="#FCFDFF"
+                       CornerRadius="28"
+                       Padding="22"
+                       HasShadow="True">
+
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <VerticalStackLayout Spacing="5">
+
+                            <Label Text="Current Class"
+                                   FontSize="15"
+                                   TextColor="Gray"/>
+
+                            <Label Text="Mobile Application Development"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+
+                            <Label Text="classroom 308 • Information Building"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                        </VerticalStackLayout>
+
+                        <Frame Grid.Column="1"
+                               BackgroundColor="#EAF2FF"
+                               CornerRadius="18"
+                               WidthRequest="58"
+                               HeightRequest="58"
+                               Padding="0"
+                               HasShadow="False">
+
+                            <Label Text="📚"
+                                   FontSize="30"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Frame>
+
+                    </Grid>
+                </Frame>
+
+                <!-- GPS Map Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="28"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="18">
+
+                        <!-- Fake Map Area -->
+                        <Border BackgroundColor="#EAF2FF"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 24"
+                                HeightRequest="190">
+
+                            <Grid>
+
+                                <!-- decorative map circles -->
+                                <Ellipse WidthRequest="120"
+                                         HeightRequest="120"
+                                         Fill="#DCEBFF"
+                                         Opacity="0.9"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <Ellipse WidthRequest="70"
+                                         HeightRequest="70"
+                                         Fill="#BFDBFE"
+                                         Opacity="0.9"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <BoxView WidthRequest="260"
+                                         HeightRequest="4"
+                                         Color="#93C5FD"
+                                         Opacity="0.65"
+                                         Rotation="18"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <BoxView WidthRequest="180"
+                                         HeightRequest="4"
+                                         Color="#93C5FD"
+                                         Opacity="0.55"
+                                         Rotation="-25"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"/>
+
+                                <Frame BackgroundColor="#2563EB"
+                                       CornerRadius="24"
+                                       WidthRequest="58"
+                                       HeightRequest="58"
+                                       Padding="0"
+                                       HasShadow="True"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+
+                                    <Label Text="📍"
+                                           FontSize="30"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Frame BackgroundColor="White"
+                                       CornerRadius="14"
+                                       Padding="10,6"
+                                       HasShadow="True"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       Margin="0,0,0,16">
+
+                                    <Label Text="Campus Information Building"
+                                           FontSize="13"
+                                           FontAttributes="Bold"
+                                           TextColor="#1E3A5F"/>
+                                </Frame>
+
+                            </Grid>
+                        </Border>
+
+                        <!-- Status -->
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+
+                            <Frame BackgroundColor="#DCFCE7"
+                                   WidthRequest="50"
+                                   HeightRequest="50"
+                                   CornerRadius="16"
+                                   Padding="0"
+                                   HasShadow="False">
+
+                                <Label Text="✓"
+                                       FontSize="24"
+                                       TextColor="#16A34A"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="4">
+
+                                <Label Text="Within allowed check-in range"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#16A34A"/>
+
+                                <Label Text="Current Location: Campus Information Building"
+                                       FontSize="13"
+                                       TextColor="Gray"/>
+
+                                <Label Text="Approx. 20m from classroom"
+                                       FontSize="13"
+                                       TextColor="Gray"/>
+                            </VerticalStackLayout>
+
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Information Card -->
+                <Frame BackgroundColor="#EAF2FF"
+                       CornerRadius="20"
+                       Padding="18"
+                       HasShadow="False">
+
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="12">
+
+                        <Label Text="ℹ️"
+                               FontSize="24"
+                               VerticalOptions="Start"/>
+
+                        <Label Grid.Column="1"
+                               Text="Your GPS location is securely verified before attendance is recorded."
+                               FontSize="14"
+                               TextColor="#1E3A5F"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Confirm Button -->
+                <Button Text="📍 Confirm Check In"
+                        Clicked="OnConfirmCheckInClicked"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="58"
+                        CornerRadius="18"/>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

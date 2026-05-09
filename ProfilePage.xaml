@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project.ProfilePage"
+             BackgroundColor="#F3F6FB"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- Hero Header -->
+            <Grid HeightRequest="185"
+                  Padding="26,28,26,24">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1E3A5F" Offset="0.0"/>
+                        <GradientStop Color="#2563EB" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <VerticalStackLayout Spacing="8"
+                                     VerticalOptions="Center">
+
+                    <Label Text="Student Profile"
+                           FontSize="34"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Label Text="Manage your account and attendance preferences."
+                           FontSize="15"
+                           TextColor="#EAF2FF"/>
+
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Content -->
+            <VerticalStackLayout Padding="24,24,24,42"
+                                 Spacing="18"
+                                 Margin="0,-42,0,0">
+
+                <!-- Profile Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="28"
+                       Padding="24"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="14"
+                                         HorizontalOptions="Center">
+
+                        <Frame BackgroundColor="#EAF2FF"
+                               CornerRadius="42"
+                               WidthRequest="86"
+                               HeightRequest="86"
+                               Padding="0"
+                               HasShadow="False">
+
+                            <Label Text="👤"
+                                   FontSize="46"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Frame>
+
+                        <Label Text="Iris Fan"
+                               FontSize="26"
+                               FontAttributes="Bold"
+                               TextColor="#1E3A5F"
+                               HorizontalOptions="Center"/>
+
+                        <Frame BackgroundColor="#EAF2FF"
+                               CornerRadius="16"
+                               Padding="12,6"
+                               HasShadow="False">
+
+                            <Label Text="Class 2301 of Computer Science and Technology (Sino-Foreign Cooperative Program)"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#2563EB"/>
+                        </Frame>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Student Details -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="24"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Student Details"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#1E3A5F"/>
+
+                        <!-- Student ID -->
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+
+                            <Label Text="🆔"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Student ID"
+                                       FontSize="13"
+                                       TextColor="Gray"/>
+                                <Label Text="2301650144"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="#1E3A5F"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Access Code -->
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+
+                            <Label Text="🔐"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Access Code"
+                                       FontSize="13"
+                                       TextColor="Gray"/>
+                                <Label Text="IRIS-65489"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="#1E3A5F"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Email -->
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+
+                            <Label Text="✉️"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Email"
+                                       FontSize="13"
+                                       TextColor="Gray"/>
+                                <Label Text="irisfan@student.edu"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="#1E3A5F"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Settings Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="24"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Settings"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#1E3A5F"/>
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+                            <Label Text="🔔"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                                   Text="Notification Settings"
+                                   FontSize="15"
+                                   TextColor="#1E3A5F"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+                            <Label Text="📍"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                                   Text="Privacy &amp; GPS Permissions"
+                                   FontSize="15"
+                                   TextColor="#1E3A5F"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+                            <Label Text="📊"
+                                   FontSize="22"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                                   Text="Attendance Preferences"
+                                   FontSize="15"
+                                   TextColor="#1E3A5F"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Logout Button -->
+                <Button Text="Logout"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="56"
+                        CornerRadius="18"/>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

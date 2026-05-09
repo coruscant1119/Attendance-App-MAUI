@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project.HomePage"
+             BackgroundColor="#F3F6FB"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- Hero Header -->
+            <Grid HeightRequest="230"
+                  Padding="26,34,26,26">
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#1E3A5F" Offset="0.0" />
+                        <GradientStop Color="#2563EB" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <VerticalStackLayout Spacing="10"
+                                     VerticalOptions="Center">
+
+                    <Label Text="Good Morning"
+                           FontSize="15"
+                           TextColor="#DCEBFF"/>
+
+                    <Label Text="Hello, Student"
+                           FontSize="34"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Label Text="Your attendance is ready for today."
+                           FontSize="15"
+                           TextColor="#EAF2FF"/>
+
+                    <Frame BackgroundColor="#EAF2FF"
+                           CornerRadius="18"
+                           Padding="12,8"
+                           HasShadow="False"
+                           HorizontalOptions="Start">
+
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="●"
+                                   TextColor="#22C55E"
+                                   FontSize="14"
+                                   VerticalOptions="Center"/>
+
+                            <Label Text="Online"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Content Area -->
+            <VerticalStackLayout Padding="24"
+                                 Spacing="18"
+                                 Margin="0,-48,0,0">
+
+                <!-- Main Class Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="28"
+                       Padding="22"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="16">
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="5">
+
+                                <Label Text="Today's Class"
+                                       FontSize="15"
+                                       TextColor="Gray"/>
+
+                                <Label Text="Mobile Application Development"
+                                       FontSize="22"
+                                       FontAttributes="Bold"
+                                       TextColor="#1E3A5F"/>
+
+                                <Label Text="08:10 - 9:50  •  Information Building"
+                                       FontSize="14"
+                                       TextColor="Gray"/>
+
+                            </VerticalStackLayout>
+
+                            <Frame Grid.Column="1"
+                                   BackgroundColor="#EAF2FF"
+                                   CornerRadius="18"
+                                   WidthRequest="58"
+                                   HeightRequest="58"
+                                   Padding="0"
+                                   HasShadow="False">
+
+                                <Label Text="📚"
+                                       FontSize="30"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Frame>
+                        </Grid>
+
+                        <Button Text="📍 Check In Now"
+                                Clicked="OnCheckInClicked"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                HeightRequest="56"
+                                CornerRadius="16"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- GPS Status Card -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="24"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="10">
+
+                        <Frame BackgroundColor="#EAF2FF"
+                               CornerRadius="18"
+                               WidthRequest="54"
+                               HeightRequest="54"
+                               Padding="0"
+                               HasShadow="False">
+
+                            <Label Text="📍"
+                                   FontSize="26"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Frame>
+
+                        <VerticalStackLayout Grid.Column="1"
+                                             Spacing="5">
+
+                            <Label Text="GPS Status"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+
+                            <Label Text="Current Area: Campus Information Building"
+                                   FontSize="14"
+                                   TextColor="#2563EB"/>
+
+                            <Label Text="Location is required before attendance check-in."
+                                   FontSize="13"
+                                   TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- Quick Actions -->
+                <Label Text="Quick Actions"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#1E3A5F"/>
+
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="14">
+
+                    <!-- History Card -->
+                    <Frame Grid.Column="0"
+                           BackgroundColor="White"
+                           CornerRadius="22"
+                           Padding="16"
+                           HasShadow="True">
+
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label Text="📊"
+                                   FontSize="28"/>
+
+                            <Label Text="History"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+
+                            <Label Text="View attendance records"
+                                   FontSize="12"
+                                   TextColor="Gray"/>
+
+                            <Button Text="Open"
+                                    Clicked="OnHistoryClicked"
+                                    BackgroundColor="#EAF2FF"
+                                    TextColor="#2563EB"
+                                    FontAttributes="Bold"
+                                    HeightRequest="40"
+                                    CornerRadius="12"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Profile Card -->
+                    <Frame Grid.Column="1"
+                           BackgroundColor="White"
+                           CornerRadius="22"
+                           Padding="16"
+                           HasShadow="True">
+
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label Text="👤"
+                                   FontSize="28"/>
+
+                            <Label Text="Profile"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#1E3A5F"/>
+
+                            <Label Text="Manage student details"
+                                   FontSize="12"
+                                   TextColor="Gray"/>
+
+                            <Button Text="Open"
+                                    Clicked="OnProfileClicked"
+                                    BackgroundColor="#EAF2FF"
+                                    TextColor="#2563EB"
+                                    FontAttributes="Bold"
+                                    HeightRequest="40"
+                                    CornerRadius="12"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </Grid>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
