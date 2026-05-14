@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Maui.Storage;
 
 namespace Project
 {
@@ -7,12 +7,19 @@ namespace Project
         public App()
         {
             InitializeComponent();
-           
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new NavigationPage(new LoginPage()));
+            // 判断是否已登录
+            if (Preferences.Get("isLoggedIn", false))
+            {
+                return new Window(new NavigationPage(new HomePage()));
+            }
+            else
+            {
+                return new Window(new NavigationPage(new LoginPage()));
+            }
         }
     }
 }

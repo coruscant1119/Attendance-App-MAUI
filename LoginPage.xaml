@@ -92,7 +92,9 @@
                                    FontSize="20"
                                    VerticalOptions="Center"/>
 
-                            <Entry Placeholder="Student ID"
+                            <Entry 
+                                    x:Name="UsernameEntry"
+                                    Placeholder="Student ID"
                                    BackgroundColor="Transparent"
                                    HeightRequest="56"
                                    HorizontalOptions="Fill"
@@ -112,7 +114,9 @@
                                    FontSize="20"
                                     VerticalOptions="Center"/>
 
-                            <Entry Placeholder="Password"
+                            <Entry 
+                                    x:Name="PasswordEntry"
+                                    Placeholder="Password"
                                    IsPassword="True"
                                    BackgroundColor="Transparent"
                                    HeightRequest="56"
