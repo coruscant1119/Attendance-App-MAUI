@@ -8,9 +8,8 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!-- Hero Header -->
-            <Grid HeightRequest="185"
-                  Padding="26,28,26,24">
+            <!-- Header -->
+            <Grid HeightRequest="185" Padding="26,28,26,24">
 
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -19,8 +18,7 @@
                     </LinearGradientBrush>
                 </Grid.Background>
 
-                <VerticalStackLayout Spacing="8"
-                                     VerticalOptions="Center">
+                <VerticalStackLayout Spacing="8" VerticalOptions="Center">
 
                     <Label Text="Attendance History"
                            FontSize="34"
@@ -31,329 +29,100 @@
                            FontSize="15"
                            TextColor="#EAF2FF"/>
 
-                    <Frame BackgroundColor="#EAF2FF"
-                           CornerRadius="18"
-                           Padding="12,8"
-                           HasShadow="False"
-                           HorizontalOptions="Start">
-
-                        <Label Text="4 Recent Records"
-                               FontSize="13"
-                               FontAttributes="Bold"
-                               TextColor="#1E3A5F"/>
-                    </Frame>
-
                 </VerticalStackLayout>
             </Grid>
 
-            <!-- Content -->
+            <!-- 内容 -->
             <VerticalStackLayout Padding="24,24,24,42"
                                  Spacing="18"
                                  Margin="0,-42,0,0">
 
-                <!-- Summary Card -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="28"
-                       Padding="22"
-                       HasShadow="True">
-
-                    <Grid ColumnDefinitions="*,*,*"
-                          ColumnSpacing="12">
-
-                        <!-- Present -->
-                        <VerticalStackLayout Grid.Column="0"
-                                             Spacing="4">
-
-                            <Label Text="Present"
-                                   FontSize="13"
-                                   TextColor="Gray"
-                                   HorizontalOptions="Center"/>
-
-                            <Label Text="2"
-                                   FontSize="28"
-                                   FontAttributes="Bold"
-                                   TextColor="#16A34A"
-                                   HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
-
-                        <!-- Late -->
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="4">
-
-                            <Label Text="Late"
-                                   FontSize="13"
-                                   TextColor="Gray"
-                                   HorizontalOptions="Center"/>
-
-                            <Label Text="1"
-                                   FontSize="28"
-                                   FontAttributes="Bold"
-                                   TextColor="#F97316"
-                                   HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
-
-                        <!-- Absent -->
-                        <VerticalStackLayout Grid.Column="2"
-                                             Spacing="4">
-
-                            <Label Text="Absent"
-                                   FontSize="13"
-                                   TextColor="Gray"
-                                   HorizontalOptions="Center"/>
-
-                            <Label Text="1"
-                                   FontSize="28"
-                                   FontAttributes="Bold"
-                                   TextColor="#2563EB"
-                                   HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
-
-                    </Grid>
-                </Frame>
-
-                <!-- Section Title -->
+                <!-- 标题 -->
                 <Label Text="Recent Records"
                        FontSize="18"
                        FontAttributes="Bold"
                        TextColor="#1E3A5F"/>
 
-                <!-- Record 1 -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="24"
-                       Padding="18"
-                       HasShadow="True">
+                <!-- ⭐ 核心：Data Binding 列表 -->
+                <CollectionView ItemsSource="{Binding Records}">
 
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="14">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
 
-                        <Frame BackgroundColor="#DCFCE7"
-                               CornerRadius="16"
-                               WidthRequest="52"
-                               HeightRequest="52"
-                               Padding="0"
-                               HasShadow="False">
+                            <Frame BackgroundColor="White"
+                                   CornerRadius="24"
+                                   Padding="18"
+                                   HasShadow="True"
+                                   Margin="0,0,0,12">
 
-                            <Label Text="✓"
-                                   FontSize="24"
-                                   TextColor="#16A34A"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Frame>
+                                <Grid ColumnDefinitions="Auto,*"
+                                      ColumnSpacing="14">
 
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="5">
+                                    <!-- 左图标 -->
+                                    <Frame BackgroundColor="#EAF2FF"
+                                           CornerRadius="16"
+                                           WidthRequest="52"
+                                           HeightRequest="52"
+                                           Padding="0"
+                                           HasShadow="False">
 
-                            <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="●"
+                                               FontSize="20"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
 
-                                <Label Text="Mobile Application Development"
-                                       FontSize="17"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
+                                    <!-- 内容 -->
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="5">
 
-                                <Frame Grid.Column="1"
-                                       BackgroundColor="#DCFCE7"
-                                       CornerRadius="14"
-                                       Padding="10,5"
-                                       HasShadow="False">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            
+                                            <Label Text="{Binding CourseName}"
+                                                
+                                                    FontSize="17"
+                                                    FontAttributes="Bold"
+                                                    TextColor="#1E3A5F"/>
+                                            <!-- 用户 -->
+                                            <Label Text="{Binding Username}"
+                                                   FontSize="13"
+                                                   
+                                                   TextColor="Gray"/>
 
-                                    <Label Text="Present"
-                                           FontSize="12"
-                                           FontAttributes="Bold"
-                                           TextColor="#16A34A"/>
-                                </Frame>
-                            </Grid>
+                                            <!-- 状态 -->
+                                            <Frame Grid.Column="1"
+                                                   BackgroundColor="#EAF2FF"
+                                                   CornerRadius="14"
+                                                   Padding="10,5"
+                                                   HasShadow="False">
 
-                            <Label Text="27 Apr 2026 • 08:10"
-                                   FontSize="14"
-                                   TextColor="Gray"/>
+                                                <Label Text="{Binding Status}"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#2563EB"/>
+                                            </Frame>
+                                        </Grid>
 
-                            <Label Text="Location: Campus Information Building"
-                                   FontSize="14"
-                                   TextColor="#2563EB"/>
+                                        <!-- 时间 -->
+                                        <Label Text="{Binding Time}"
+                                               FontSize="14"
+                                               TextColor="Gray"/>
 
-                        </VerticalStackLayout>
+                                        <!-- 位置 -->
+                                        <Label Text="Location: Campus"
+                                               FontSize="14"
+                                               TextColor="#2563EB"/>
 
-                    </Grid>
-                </Frame>
+                                    </VerticalStackLayout>
 
-                <!-- Record 2 -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="24"
-                       Padding="18"
-                       HasShadow="True">
+                                </Grid>
 
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="14">
+                            </Frame>
 
-                        <Frame BackgroundColor="#DCFCE7"
-                               CornerRadius="16"
-                               WidthRequest="52"
-                               HeightRequest="52"
-                               Padding="0"
-                               HasShadow="False">
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                            <Label Text="✓"
-                                   FontSize="24"
-                                   TextColor="#16A34A"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Frame>
-
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="5">
-
-                            <Grid ColumnDefinitions="*,Auto">
-
-                                <Label Text="Data Science Fundamentals"
-                                       FontSize="17"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
-
-                                <Frame Grid.Column="1"
-                                       BackgroundColor="#DCFCE7"
-                                       CornerRadius="14"
-                                       Padding="10,5"
-                                       HasShadow="False">
-
-                                    <Label Text="Present"
-                                           FontSize="12"
-                                           FontAttributes="Bold"
-                                           TextColor="#16A34A"/>
-                                </Frame>
-                            </Grid>
-
-                            <Label Text="26 Apr 2026 • 10:30"
-                                   FontSize="14"
-                                   TextColor="Gray"/>
-
-                            <Label Text="Location: Campus Rixin Building"
-                                   FontSize="14"
-                                   TextColor="#2563EB"/>
-
-                        </VerticalStackLayout>
-
-                    </Grid>
-                </Frame>
-
-                <!-- Record 3 -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="24"
-                       Padding="18"
-                       HasShadow="True">
-
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="14">
-
-                        <Frame BackgroundColor="#FFEDD5"
-                               CornerRadius="16"
-                               WidthRequest="52"
-                               HeightRequest="52"
-                               Padding="0"
-                               HasShadow="False">
-
-                            <Label Text="!"
-                                   FontSize="24"
-                                   FontAttributes="Bold"
-                                   TextColor="#F97316"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Frame>
-
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="5">
-
-                            <Grid ColumnDefinitions="*,Auto">
-
-                                <Label Text="Programming I"
-                                       FontSize="17"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
-
-                                <Frame Grid.Column="1"
-                                       BackgroundColor="#FFEDD5"
-                                       CornerRadius="14"
-                                       Padding="10,5"
-                                       HasShadow="False">
-
-                                    <Label Text="Late"
-                                           FontSize="12"
-                                           FontAttributes="Bold"
-                                           TextColor="#F97316"/>
-                                </Frame>
-                            </Grid>
-
-                            <Label Text="25 Apr 2026 • 09:15"
-                                   FontSize="14"
-                                   TextColor="Gray"/>
-
-                            <Label Text="Location: Campus Information Building"
-                                   FontSize="14"
-                                   TextColor="#2563EB"/>
-
-                        </VerticalStackLayout>
-
-                    </Grid>
-                </Frame>
-
-                <!-- Record 4 -->
-                <Frame BackgroundColor="White"
-                       CornerRadius="24"
-                       Padding="18"
-                       HasShadow="True">
-
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="14">
-
-                        <Frame BackgroundColor="#DBEAFE"
-                               CornerRadius="16"
-                               WidthRequest="52"
-                               HeightRequest="52"
-                               Padding="0"
-                               HasShadow="False">
-
-                            <Label Text="✕"
-                                   FontSize="22"
-                                   FontAttributes="Bold"
-                                   TextColor="#2563EB"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Frame>
-
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="5">
-
-                            <Grid ColumnDefinitions="*,Auto">
-
-                                <Label Text="Data Structures"
-                                       FontSize="17"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
-
-                                <Frame Grid.Column="1"
-                                       BackgroundColor="#DBEAFE"
-                                       CornerRadius="14"
-                                       Padding="10,5"
-                                       HasShadow="False">
-
-                                    <Label Text="Absent"
-                                           FontSize="12"
-                                           FontAttributes="Bold"
-                                           TextColor="#2563EB"/>
-                                </Frame>
-                            </Grid>
-
-                            <Label Text="24 Apr 2026 • 08:30"
-                                   FontSize="14"
-                                   TextColor="Gray"/>
-
-                            <Label Text="Location: Teaching Building No. 1 in the North Campus"
-                                   FontSize="14"
-                                   TextColor="#2563EB"/>
-
-                        </VerticalStackLayout>
-
-                    </Grid>
-                </Frame>
+                </CollectionView>
 
             </VerticalStackLayout>
 

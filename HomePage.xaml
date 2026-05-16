@@ -28,7 +28,7 @@
 
                     <Label 
                            x:Name="WelcomeLabel" 
-                            Text="Hello, Student"
+                           Text="{Binding Username}"
                            FontSize="34"
                            FontAttributes="Bold"
                            TextColor="White"/>

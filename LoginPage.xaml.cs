@@ -39,7 +39,7 @@ public partial class LoginPage : ContentPage
 
             await DisplayAlert("Success", "Login successful", "OK");
 
-            await Navigation.PushAsync(new HomePage());
+            Application.Current.MainPage = new AppShell();
         }
         else
         {

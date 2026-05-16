@@ -14,7 +14,8 @@ namespace Project
             // 判断是否已登录
             if (Preferences.Get("isLoggedIn", false))
             {
-                return new Window(new NavigationPage(new HomePage()));
+               
+                return new Window(new AppShell());
             }
             else
             {
