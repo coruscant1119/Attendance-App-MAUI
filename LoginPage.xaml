@@ -5,188 +5,98 @@
              BackgroundColor="#F3F6FB"
              NavigationPage.HasNavigationBar="False">
 
-    <ScrollView>
-        <Grid RowDefinitions="Auto,*">
+    
+    <Grid>
+        
+        <Image Source="bg.jpg"
+               Aspect="AspectFill"
+               Opacity="0.12" />
 
-            <!-- Top Brand Section -->
-            <Grid Grid.Row="0">
+       
+        <ScrollView>
+            <Grid RowDefinitions="Auto,*">
 
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#1E3A5F" Offset="0.0" />
-                        <GradientStop Color="#2563EB" Offset="1.0" />
-                    </LinearGradientBrush>
-                </Grid.Background>
+                
+                <Grid Grid.Row="0">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1E3A5F" Offset="0.0" />
+                            <GradientStop Color="#2563EB" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
 
-                <VerticalStackLayout Padding="30,50,30,30"
-                                     Spacing="14">
+                    <VerticalStackLayout Padding="30,50,30,30" Spacing="14">
+                        <Label Text="📍" FontSize="38" TextColor="White"/>
+                        <Label Text="XKU Attend" FontSize="38" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Attendance check-in with GPS location for XKU" FontSize="15" TextColor="#E0ECFF"/>
 
-                    <Label Text="📍"
-                           FontSize="38"
-                           TextColor="White"/>
-
-                    <Label Text="XKU Attend"
-                           FontSize="38"
-                           FontAttributes="Bold"
-                           TextColor="White"/>
-
-                    <Label Text="Attendance check-in with GPS location for XKU"
-                           FontSize="15"
-                           TextColor="#E0ECFF"/>
-
-                    <Frame BackgroundColor="#EAF2FF"
-                           CornerRadius="20"
-                           Padding="12,8"
-                           HasShadow="False"
-                           HorizontalOptions="Start">
-
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="●"
-                                   TextColor="#22C55E"
-                                   FontSize="14"
-                                   VerticalOptions="Center"/>
-
-                            <Label Text="Location Verified"
-                                   FontSize="13"
-                                   FontAttributes="Bold"
-                                   TextColor="#1E3A5F"/>
-                        </HorizontalStackLayout>
-                    </Frame>
-
-                </VerticalStackLayout>
-            </Grid>
-
-            <!-- Login Card -->
-            <Frame Grid.Row="1"
-                   Margin="24,0,24,28"
-                   MaximumWidthRequest="520"
-                   HorizontalOptions="Center"
-                   BackgroundColor="White"
-                   CornerRadius="30"
-                   Padding="26"
-                   HasShadow="True"
-                   VerticalOptions="Start">
-
-                <VerticalStackLayout Spacing="18">
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="Welcome Back"
-                               FontSize="28"
-                               FontAttributes="Bold"
-                               TextColor="#1E3A5F"/>
-
-                        <Label Text="Sign in to manage your attendance."
-                               FontSize="14"
-                               TextColor="Gray"/>
+                        <Frame BackgroundColor="#EAF2FF" CornerRadius="20" Padding="12,8" HasShadow="False" HorizontalOptions="Start">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="●" TextColor="#22C55E" FontSize="14" VerticalOptions="Center"/>
+                                <Label Text="Location Verified" FontSize="13" FontAttributes="Bold" TextColor="#1E3A5F"/>
+                            </HorizontalStackLayout>
+                        </Frame>
                     </VerticalStackLayout>
+                </Grid>
 
-                    <!-- Student ID Input -->
-                    <Border BackgroundColor="#F1F5F9"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            Padding="14,0">
+                <!-- Login Card -->
+                <Frame Grid.Row="1"
+                       Margin="24,0,24,28"
+                       MaximumWidthRequest="520"
+                       HorizontalOptions="Center"
+                       BackgroundColor="White"
+                       CornerRadius="30"
+                       Padding="26"
+                       HasShadow="True"
+                       VerticalOptions="Start">
 
-                        <HorizontalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="18">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Welcome Back" FontSize="28" FontAttributes="Bold" TextColor="#1E3A5F"/>
+                            <Label Text="Sign in to manage your attendance." FontSize="14" TextColor="Gray"/>
+                        </VerticalStackLayout>
 
-                            <Label Text="👤"
-                                   FontSize="20"
-                                   VerticalOptions="Center"/>
+                        <!-- Student ID Input -->
+                        <Border BackgroundColor="#F1F5F9" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14,0">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="👤" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="UsernameEntry" Placeholder="Student ID" BackgroundColor="Transparent" HeightRequest="56" HorizontalOptions="Fill" Visual="Default"/>
+                            </HorizontalStackLayout>
+                        </Border>
 
-                            <Entry 
-                                    x:Name="UsernameEntry"
-                                    Placeholder="Student ID"
-                                   BackgroundColor="Transparent"
-                                   HeightRequest="56"
-                                   HorizontalOptions="Fill"
-                                   Visual="Default"/>
-                        </HorizontalStackLayout>
-                    </Border>
+                        <!-- Password Input -->
+                        <Border BackgroundColor="#F1F5F9" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14,0">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="🔒" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" BackgroundColor="Transparent" HeightRequest="56" HorizontalOptions="Fill" Visual="Default"/>
+                            </HorizontalStackLayout>
+                        </Border>
 
-                    <!-- Password Input -->
-                    <Border BackgroundColor="#F1F5F9"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            Padding="14,0">
+                        <!-- Login Button -->
+                        <Button Text="Login" Clicked="OnLoginClicked" BackgroundColor="#2563EB" TextColor="White" FontAttributes="Bold" FontSize="16" HeightRequest="58" CornerRadius="18"/>
 
-                        <HorizontalStackLayout Spacing="10">
+                        <!-- Feature Cards -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="14">
+                            <Frame Grid.Column="0" BackgroundColor="#F8FAFC" CornerRadius="18" Padding="16" HasShadow="True">
+                                <VerticalStackLayout Spacing="7">
+                                    <Label Text="📍" FontSize="26"/>
+                                    <Label Text="GPS Verified" FontSize="14" FontAttributes="Bold" TextColor="#1E3A5F"/>
+                                    <Label Text="Secure check-in by location" FontSize="12" TextColor="Gray"/>
+                                </VerticalStackLayout>
+                            </Frame>
 
-                            <Label Text="🔒"
-                                   FontSize="20"
-                                    VerticalOptions="Center"/>
+                            <Frame Grid.Column="1" BackgroundColor="#F8FAFC" CornerRadius="18" Padding="16" HasShadow="True">
+                                <VerticalStackLayout Spacing="7">
+                                    <Label Text="📊" FontSize="26"/>
+                                    <Label Text="Track Records" FontSize="14" FontAttributes="Bold" TextColor="#1E3A5F"/>
+                                    <Label Text="Review attendance history" FontSize="12" TextColor="Gray"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
 
-                            <Entry 
-                                    x:Name="PasswordEntry"
-                                    Placeholder="Password"
-                                   IsPassword="True"
-                                   BackgroundColor="Transparent"
-                                   HeightRequest="56"
-                                   HorizontalOptions="Fill"
-                                   Visual="Default"/>
-                        </HorizontalStackLayout>
-                    </Border>
-
-                    <!-- Login Button -->
-                    <Button Text="Login"
-                            Clicked="OnLoginClicked"
-                            BackgroundColor="#2563EB"
-                            TextColor="White"
-                            FontAttributes="Bold"
-                            FontSize="16"
-                            HeightRequest="58"
-                            CornerRadius="18"/>
-
-                    <!-- Feature Cards -->
-                    <Grid ColumnDefinitions="*,*"
-                          ColumnSpacing="14">
-
-                        <Frame Grid.Column="0"
-                               BackgroundColor="#F8FAFC"
-                               CornerRadius="18"
-                               Padding="16"
-                               HasShadow="True">
-
-                            <VerticalStackLayout Spacing="7">
-                                <Label Text="📍"
-                                       FontSize="26"/>
-
-                                <Label Text="GPS Verified"
-                                       FontSize="14"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
-
-                                <Label Text="Secure check-in by location"
-                                       FontSize="12"
-                                       TextColor="Gray"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Column="1"
-                               BackgroundColor="#F8FAFC"
-                               CornerRadius="18"
-                               Padding="16"
-                               HasShadow="True">
-
-                            <VerticalStackLayout Spacing="7">
-                                <Label Text="📊"
-                                       FontSize="26"/>
-
-                                <Label Text="Track Records"
-                                       FontSize="14"
-                                       FontAttributes="Bold"
-                                       TextColor="#1E3A5F"/>
-
-                                <Label Text="Review attendance history"
-                                       FontSize="12"
-                                       TextColor="Gray"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                    </Grid>
-
-                </VerticalStackLayout>
-            </Frame>
-
-        </Grid>
-    </ScrollView>
-
+            </Grid>
+        </ScrollView>
+    </Grid>
 </ContentPage>

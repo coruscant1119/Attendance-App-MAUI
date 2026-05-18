@@ -37,9 +37,9 @@
                                  Spacing="18"
                                  Margin="0,-42,0,0">
                 <Frame BackgroundColor="White"
-       CornerRadius="28"
-       Padding="20"
-       HasShadow="True">
+                            CornerRadius="28"
+                             Padding="20"
+                         HasShadow="True">
 
                     <VerticalStackLayout Spacing="12"
                          HorizontalOptions="Center">
@@ -73,12 +73,12 @@
 
                 </Frame>
                 <Frame BackgroundColor="White"
-       CornerRadius="28"
-       Padding="20"
-       HasShadow="True">
+                     CornerRadius="28"
+                      Padding="20"
+                     HasShadow="True">
 
                     <Grid ColumnDefinitions="*,*,*"
-          ColumnSpacing="12">
+                     ColumnSpacing="12">
 
                         <VerticalStackLayout Grid.Column="0">
                             <Label Text="Present" FontSize="13" HorizontalOptions="Center"/>
@@ -197,7 +197,7 @@
                                                FontSize="13"
                                                TextColor="Gray"/>
 
-                                        <!-- ⭐ 地址（API动态） -->
+                                        <!-- ⭐ 地址（ -->
                                         <Label Text="{Binding Location}"
                                                FontSize="13"
                                                TextColor="#2563EB"/>

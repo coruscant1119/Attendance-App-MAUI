@@ -66,7 +66,7 @@ public partial class HomePage : ContentPage
                 double infoLat = 34.10542076083684;
                 double infoLon = 108.88559091348887;
 
-                // ⭐ 图书馆坐标（辅助）
+                // 
                 double libLat = 34.1048;
                 double libLon = 108.8852;
 
