@@ -59,9 +59,12 @@ public partial class AttendanceHistoryPage : ContentPage
         // ⭐ 最新在最前
         list = list.OrderByDescending(x => x.Time).ToList();
 
-        BindingContext = new HistoryViewModel
+        var vm = new HistoryViewModel
         {
             Records = list
         };
+
+        BindingContext = vm;
+
     }
 }

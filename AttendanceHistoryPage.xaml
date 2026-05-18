@@ -32,18 +32,88 @@
                 </VerticalStackLayout>
             </Grid>
 
-            <!-- 内容 -->
+            <!-- Content -->
             <VerticalStackLayout Padding="24,24,24,42"
                                  Spacing="18"
                                  Margin="0,-42,0,0">
+                <Frame BackgroundColor="White"
+       CornerRadius="28"
+       Padding="20"
+       HasShadow="True">
 
-                <!-- 标题 -->
+                    <VerticalStackLayout Spacing="12"
+                         HorizontalOptions="Center">
+
+                        <Label Text="Attendance Rate"
+               FontSize="16"
+               TextColor="Gray"
+               HorizontalOptions="Center"/>
+
+                        <Grid WidthRequest="120"
+              HeightRequest="120">
+
+                            <Frame CornerRadius="60"
+                   BackgroundColor="#E5E7EB"
+                   HasShadow="False"/>
+
+                            <Frame CornerRadius="50"
+                   Margin="10"
+                   BackgroundColor="White"
+                   HasShadow="False"/>
+
+                            <Label Text="{Binding AttendanceText}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{Binding RateColor}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+                <Frame BackgroundColor="White"
+       CornerRadius="28"
+       Padding="20"
+       HasShadow="True">
+
+                    <Grid ColumnDefinitions="*,*,*"
+          ColumnSpacing="12">
+
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Present" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="{Binding PresentCount}"
+                   FontSize="26"
+                   TextColor="#16A34A"
+                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Late" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="{Binding LateCount}"
+                   FontSize="26"
+                   TextColor="#F97316"
+                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="2">
+                            <Label Text="Absent" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="{Binding AbsentCount}"
+                   FontSize="26"
+                   TextColor="#EF4444"
+                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                    </Grid>
+                </Frame>
+
+                <!-- Title -->
                 <Label Text="Recent Records"
                        FontSize="18"
                        FontAttributes="Bold"
                        TextColor="#1E3A5F"/>
 
-                <!-- ⭐ 核心：Data Binding 列表 -->
+                <!-- ⭐ Data Binding -->
                 <CollectionView ItemsSource="{Binding Records}">
 
                     <CollectionView.ItemTemplate>
@@ -58,7 +128,7 @@
                                 <Grid ColumnDefinitions="Auto,*"
                                       ColumnSpacing="14">
 
-                                    <!-- 左图标 -->
+                                    <!-- Icon -->
                                     <Frame BackgroundColor="#EAF2FF"
                                            CornerRadius="16"
                                            WidthRequest="52"
@@ -66,51 +136,70 @@
                                            Padding="0"
                                            HasShadow="False">
 
-                                        <Label Text="●"
-                                               FontSize="20"
+                                        <Label Text="📍"
+                                               FontSize="24"
                                                HorizontalOptions="Center"
                                                VerticalOptions="Center"/>
                                     </Frame>
 
-                                    <!-- 内容 -->
+                                    <!-- Content -->
                                     <VerticalStackLayout Grid.Column="1"
-                                                         Spacing="5">
+                                                         Spacing="6">
 
+                                        <!-- ⭐ 第一行：课程 + 状态 -->
                                         <Grid ColumnDefinitions="*,Auto">
-                                            
+
+                                            <!-- 课程名 -->
                                             <Label Text="{Binding CourseName}"
-                                                
-                                                    FontSize="17"
-                                                    FontAttributes="Bold"
-                                                    TextColor="#1E3A5F"/>
-                                            <!-- 用户 -->
-                                            <Label Text="{Binding Username}"
-                                                   FontSize="13"
-                                                   
-                                                   TextColor="Gray"/>
+                                                   FontSize="17"
+                                                   FontAttributes="Bold"
+                                                   TextColor="#1E3A5F"/>
 
                                             <!-- 状态 -->
                                             <Frame Grid.Column="1"
-                                                   BackgroundColor="#EAF2FF"
                                                    CornerRadius="14"
                                                    Padding="10,5"
                                                    HasShadow="False">
 
+                                                <Frame.Triggers>
+
+                                                    <DataTrigger TargetType="Frame"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="Present">
+                                                        <Setter Property="BackgroundColor" Value="#DCFCE7"/>
+                                                    </DataTrigger>
+
+                                                    <DataTrigger TargetType="Frame"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="Late">
+                                                        <Setter Property="BackgroundColor" Value="#FFEDD5"/>
+                                                    </DataTrigger>
+
+                                                    <DataTrigger TargetType="Frame"
+                                                                 Binding="{Binding Status}"
+                                                                 Value="Absent">
+                                                        <Setter Property="BackgroundColor" Value="#FEE2E2"/>
+                                                    </DataTrigger>
+
+                                                </Frame.Triggers>
+
                                                 <Label Text="{Binding Status}"
-                                                       FontSize="14"
+                                                       FontSize="12"
                                                        FontAttributes="Bold"
-                                                       TextColor="#2563EB"/>
+                                                       HorizontalOptions="Center"/>
+
                                             </Frame>
+
                                         </Grid>
 
                                         <!-- 时间 -->
                                         <Label Text="{Binding Time}"
-                                               FontSize="14"
+                                               FontSize="13"
                                                TextColor="Gray"/>
 
-                                        <!-- 位置 -->
-                                        <Label Text="Location: Campus"
-                                               FontSize="14"
+                                        <!-- ⭐ 地址（API动态） -->
+                                        <Label Text="{Binding Location}"
+                                               FontSize="13"
                                                TextColor="#2563EB"/>
 
                                     </VerticalStackLayout>

@@ -3,6 +3,7 @@ using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.ApplicationModel;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace Project;
 
@@ -26,19 +27,17 @@ public partial class HomePage : ContentPage
 
         string user = Preferences.Get("currentUser", "Guest");
 
-        // ⭐ Data Binding
         BindingContext = new UserViewModel
         {
             Username = $"👋 Welcome, {user}"
         };
     }
 
-    // ⭐ Check-in（升级版）
+    // ⭐  Check-in
     private async void OnCheckInClicked(object sender, EventArgs e)
     {
         try
         {
-            // 权限
             var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
             if (status != PermissionStatus.Granted)
@@ -47,7 +46,6 @@ public partial class HomePage : ContentPage
                 return;
             }
 
-            // 获取位置
             var location = await Geolocation.GetLastKnownLocationAsync();
 
             if (location == null)
@@ -61,29 +59,56 @@ public partial class HomePage : ContentPage
                 double latitude = location.Latitude;
                 double longitude = location.Longitude;
 
-                double schoolLat = 34.10542076083684;
-                double schoolLon = 108.88559091348887;
+                // ⭐ API地址（辅助）
+                string apiAddress = await GetAddressFromApi(latitude, longitude);
 
-                // ⭐ 用真实距离（米）
-                double distance = CalculateDistance(latitude, longitude, schoolLat, schoolLon);
+                // ⭐ 信息大厦坐标（主）
+                double infoLat = 34.10542076083684;
+                double infoLon = 108.88559091348887;
 
+                // ⭐ 图书馆坐标（辅助）
+                double libLat = 34.1048;
+                double libLon = 108.8852;
+
+                // ⭐ 距离计算
+                double dInfo = CalculateDistance(latitude, longitude, infoLat, infoLon);
+                double dLib = CalculateDistance(latitude, longitude, libLat, libLon);
+
+                double minDistance = Math.Min(dInfo, dLib);
+
+                // ⭐ 优先判断区域
+                string finalArea;
+
+                if (dInfo <= 400)
+                    finalArea = "Campus Information Building";
+                else if (dLib <= 200)
+                    finalArea = "RiXin Building";
+                else
+                    finalArea = "Outside Campus";
+
+                // ⭐ 显示
                 await DisplayAlert("Your Location",
-                    $"Lat: {latitude}\nLon: {longitude}\nDistance: {distance:F2} meters",
+                    $"📍 Detected Area: {finalArea}\n" +
+                    $"📍 API Address: {apiAddress}\n\n" +
+                    $"Distance: {minDistance:F2} meters",
                     "OK");
 
-                if (distance <= 150) // 150米范围
+                // ⭐ 签到判断
+                if (minDistance <= 400)
                 {
-                    await DisplayAlert("Success", "Check-in successful!", "OK");
+                    await DisplayAlert("Success",
+                        $"✔ Check-in successful\n📍 {finalArea}",
+                        "OK");
 
-                    // ⭐ 保存成功记录
-                    SaveRecord("Success");
+                    SaveRecord("Present", $"{finalArea} ({apiAddress})");
                 }
                 else
                 {
-                    await DisplayAlert("Failed", "You are not in campus area", "OK");
+                    await DisplayAlert("Failed",
+                        $"✖ Not in campus area\nDistance: {minDistance:F2}m",
+                        "OK");
 
-                    // ⭐ 保存失败记录
-                    SaveRecord("Failed");
+                    SaveRecord("Absent", apiAddress);
                 }
             }
             else
@@ -97,10 +122,10 @@ public partial class HomePage : ContentPage
         }
     }
 
-    // ⭐ 距离函数
+    // ⭐ 距离计算
     double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
     {
-        var R = 6371000; // 地球半径（米）
+        var R = 6371000;
 
         var dLat = (lat2 - lat1) * Math.PI / 180;
         var dLon = (lon2 - lon1) * Math.PI / 180;
@@ -117,25 +142,55 @@ public partial class HomePage : ContentPage
     }
 
     // ⭐ 保存记录
-    void SaveRecord(string status)
+    void SaveRecord(string status, string address)
     {
         var username = Preferences.Get("currentUser", "Unknown");
 
         var record = new AttendanceRecord
         {
             Username = username,
-            CourseName = "Mobile Application Development", // ⭐ 课程名
+            CourseName = "Mobile Application Development",
             Time = DateTime.Now.ToString("dd MMM yyyy • HH:mm"),
-            Status = status
+            Status = status,
+            Location = address
         };
 
         var json = Preferences.Get("records", "[]");
-        var list = JsonSerializer.Deserialize<List<AttendanceRecord>>(json);
+        var list = JsonSerializer.Deserialize<List<AttendanceRecord>>(json) ?? new List<AttendanceRecord>();
 
         list.Add(record);
 
         Preferences.Set("records", JsonSerializer.Serialize(list));
     }
+
+    // ⭐ 高德API
+    async Task<string> GetAddressFromApi(double lat, double lon)
+    {
+        try
+        {
+            string apiKey = "9467862965fb0cae5bde79be831a3ccf"; 
+
+            string url = $"https://restapi.amap.com/v3/geocode/regeo?location={lon},{lat}&key={apiKey}";
+
+            using var client = new HttpClient();
+
+            var response = await client.GetStringAsync(url);
+
+            var json = JsonDocument.Parse(response);
+
+            var address = json.RootElement
+                .GetProperty("regeocode")
+                .GetProperty("formatted_address")
+                .GetString();
+
+            return address ?? "Unknown location";
+        }
+        catch
+        {
+            return "Location unavailable";
+        }
+    }
+
     // 👉 History
     private async void OnHistoryClicked(object sender, EventArgs e)
     {

@@ -49,16 +49,18 @@
                                          HorizontalOptions="Center">
 
                         <Frame BackgroundColor="#EAF2FF"
-                               CornerRadius="42"
-                               WidthRequest="86"
-                               HeightRequest="86"
-                               Padding="0"
-                               HasShadow="False">
-
-                            <Label Text="👤"
-                                   FontSize="46"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                                 CornerRadius="42"
+                                    WidthRequest="86"
+                                     HeightRequest="86"
+                                 Padding="0"
+                                HasShadow="False"
+                                IsClippedToBounds="True">
+                            <Image Source="mypicture.png"
+                                 Aspect="AspectFill"
+                                 WidthRequest="86"
+                                 HeightRequest="86"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
                         </Frame>
 
                         <Label Text="Iris Fan"
@@ -213,7 +215,8 @@
                         FontAttributes="Bold"
                         FontSize="16"
                         HeightRequest="56"
-                        CornerRadius="18"/>
+                        CornerRadius="18"
+                        Clicked="OnLogoutClicked"/> 
 
             </VerticalStackLayout>
 
