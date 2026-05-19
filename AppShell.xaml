@@ -8,21 +8,27 @@
     Shell.NavBarIsVisible="False">
 
     <TabBar>
+
         <ShellContent
             Title="Home"
+            Route="HomePage"
             ContentTemplate="{DataTemplate local:HomePage}" />
 
         <ShellContent
             Title="Check In"
+            Route="CheckInPage"
             ContentTemplate="{DataTemplate local:CheckInPage}" />
 
         <ShellContent
             Title="History"
+            Route="HistoryPage"
             ContentTemplate="{DataTemplate local:AttendanceHistoryPage}" />
 
         <ShellContent
             Title="Profile"
+            Route="ProfilePage"
             ContentTemplate="{DataTemplate local:ProfilePage}" />
+
     </TabBar>
 
 </Shell>

@@ -25,12 +25,41 @@ public partial class AttendanceHistoryPage : ContentPage
             var allRecords = JsonSerializer.Deserialize<List<AttendanceRecord>>(json)
                              ?? new List<AttendanceRecord>();
 
-            
+            // =========================
+            // ⭐⭐⭐ 强制加入测试数据
+            // =========================
+            allRecords.AddRange(new List<AttendanceRecord>
+            {
+                new AttendanceRecord
+                {
+                    CourseName = "Python",
+                    Time = "10 Jun 2026 • 08:10",
+                    Status = "Present",
+                    Location = "Campus Information Building"
+                },
+                new AttendanceRecord
+                {
+                    CourseName = "Data Structure",
+                    Time = "10 Jun 2026 • 08:18",
+                    Status = "Late",
+                    Location = "Campus Information Building"
+                },
+                new AttendanceRecord
+                {
+                    CourseName = "Java",
+                    Time = "09 Jun 2026 • 08:10",
+                    Status = "Absent",
+                    Location = "Outside Campus"
+                }
+            });
+
+            // =========================
+            // ⭐ 地址规范化
+            // =========================
             foreach (var record in allRecords)
             {
                 string original = record.Location ?? "";
 
-                // 如果为空才给默认值
                 if (string.IsNullOrWhiteSpace(original))
                 {
                     record.Location = "Campus Information Building";
@@ -43,16 +72,19 @@ public partial class AttendanceHistoryPage : ContentPage
                 {
                     record.Location = "Library";
                 }
-                
             }
 
-            // ⭐ 排序
+            // =========================
+            // ⭐ 排序（最新在前）
+            // =========================
             var sortedRecords = allRecords
                 .Where(r => !string.IsNullOrEmpty(r.Time))
                 .OrderByDescending(r => ParseDateTimeFlexible(r.Time))
                 .ToList();
 
-            // ⭐ 绑定 ViewModel
+            // =========================
+            // ⭐ 绑定
+            // =========================
             BindingContext = new HistoryViewModel
             {
                 Records = sortedRecords
@@ -64,7 +96,9 @@ public partial class AttendanceHistoryPage : ContentPage
         }
     }
 
+    // =========================
     // ⭐ 时间解析
+    // =========================
     private DateTime ParseDateTimeFlexible(string timeStr)
     {
         if (DateTime.TryParse(timeStr, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))

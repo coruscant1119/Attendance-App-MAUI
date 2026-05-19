@@ -21,7 +21,7 @@ public partial class HomePage : ContentPage
         if (!Preferences.Get("isLoggedIn", false))
         {
             await DisplayAlert("Error", "Please login first", "OK");
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            await Shell.Current.GoToAsync("//LoginPage");
             return;
         }
 
@@ -33,93 +33,72 @@ public partial class HomePage : ContentPage
         };
     }
 
-    // ⭐  Check-in
+    // ⭐⭐⭐ 快捷签到（不跳转 + 真实地址）
     private async void OnCheckInClicked(object sender, EventArgs e)
     {
         try
         {
-            var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            var permission = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
-            if (status != PermissionStatus.Granted)
+            if (permission != PermissionStatus.Granted)
             {
                 await DisplayAlert("Error", "Location permission denied", "OK");
                 return;
             }
 
-            var location = await Geolocation.GetLastKnownLocationAsync();
+            var location = await Geolocation.GetLocationAsync(
+                new GeolocationRequest(GeolocationAccuracy.High));
 
             if (location == null)
             {
-                location = await Geolocation.GetLocationAsync(
-                    new GeolocationRequest(GeolocationAccuracy.High));
+                await DisplayAlert("Error", "Unable to get location", "OK");
+                return;
             }
 
-            if (location != null)
+            double lat = location.Latitude;
+            double lon = location.Longitude;
+
+            double targetLat = 34.10542076083684;
+            double targetLon = 108.88559091348887;
+
+            double distance = CalculateDistance(lat, lon, targetLat, targetLon);
+
+            // ⭐ 获取真实地址（关键修复点）
+            string address = await GetAddressFromApi(lat, lon);
+
+            if (distance <= 150)
             {
-                double latitude = location.Latitude;
-                double longitude = location.Longitude;
-
-                // ⭐ API地址（辅助）
-                string apiAddress = await GetAddressFromApi(latitude, longitude);
-
-                // ⭐ 信息大厦坐标（主）
-                double infoLat = 34.10542076083684;
-                double infoLon = 108.88559091348887;
-
-                // 
-                double libLat = 34.1048;
-                double libLon = 108.8852;
-
-                // ⭐ 距离计算
-                double dInfo = CalculateDistance(latitude, longitude, infoLat, infoLon);
-                double dLib = CalculateDistance(latitude, longitude, libLat, libLon);
-
-                double minDistance = Math.Min(dInfo, dLib);
-
-                // ⭐ 优先判断区域
-                string finalArea;
-
-                if (dInfo <= 400)
-                    finalArea = "Campus Information Building";
-                else if (dLib <= 200)
-                    finalArea = "RiXin Building";
-                else
-                    finalArea = "Outside Campus";
-
-                // ⭐ 显示
-                await DisplayAlert("Your Location",
-                    $"📍 Detected Area: {finalArea}\n" +
-                    $"📍 API Address: {apiAddress}\n\n" +
-                    $"Distance: {minDistance:F2} meters",
+                await DisplayAlert("Success",
+                    $"✔ Quick Check-in successful\n📍 {address}",
                     "OK");
 
-                // ⭐ 签到判断
-                if (minDistance <= 400)
-                {
-                    await DisplayAlert("Success",
-                        $"✔ Check-in successful\n📍 {finalArea}",
-                        "OK");
-
-                    SaveRecord("Present", $"{finalArea} ({apiAddress})");
-                }
-                else
-                {
-                    await DisplayAlert("Failed",
-                        $"✖ Not in campus area\nDistance: {minDistance:F2}m",
-                        "OK");
-
-                    SaveRecord("Absent", apiAddress);
-                }
+                SaveRecord("Present", address);
             }
             else
             {
-                await DisplayAlert("Error", "Unable to get location", "OK");
+                await DisplayAlert("Failed",
+                    $"✖ Not in class area\n📍 {address}\nDistance: {distance:F0}m",
+                    "OK");
+
+                SaveRecord("Absent", address);
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "OK");
         }
+    }
+
+    // ⭐ History（Shell跳转）
+    private async void OnHistoryClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//HistoryPage");
+    }
+
+    // ⭐ Profile
+    private async void OnProfileClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//ProfilePage");
     }
 
     // ⭐ 距离计算
@@ -156,19 +135,21 @@ public partial class HomePage : ContentPage
         };
 
         var json = Preferences.Get("records", "[]");
-        var list = JsonSerializer.Deserialize<List<AttendanceRecord>>(json) ?? new List<AttendanceRecord>();
+
+        var list = JsonSerializer.Deserialize<List<AttendanceRecord>>(json)
+                   ?? new List<AttendanceRecord>();
 
         list.Add(record);
 
         Preferences.Set("records", JsonSerializer.Serialize(list));
     }
 
-    // ⭐ 高德API
+    // ⭐ 高德API（真实地址）
     async Task<string> GetAddressFromApi(double lat, double lon)
     {
         try
         {
-            string apiKey = "9467862965fb0cae5bde79be831a3ccf"; 
+            string apiKey = "9467862965fb0cae5bde79be831a3ccf";
 
             string url = $"https://restapi.amap.com/v3/geocode/regeo?location={lon},{lat}&key={apiKey}";
 
@@ -178,28 +159,14 @@ public partial class HomePage : ContentPage
 
             var json = JsonDocument.Parse(response);
 
-            var address = json.RootElement
+            return json.RootElement
                 .GetProperty("regeocode")
                 .GetProperty("formatted_address")
-                .GetString();
-
-            return address ?? "Unknown location";
+                .GetString() ?? "Unknown location";
         }
         catch
         {
             return "Location unavailable";
         }
-    }
-
-    // 👉 History
-    private async void OnHistoryClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new AttendanceHistoryPage());
-    }
-
-    // 👉 Profile
-    private async void OnProfileClicked(object sender, EventArgs e)
-    {
-        await DisplayAlert("Profile", "User profile page", "OK");
     }
 }
