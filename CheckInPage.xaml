@@ -8,7 +8,7 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!-- Hero Header -->
+            <!-- Header -->
             <Grid HeightRequest="185"
                   Padding="26,28,26,24">
 
@@ -31,19 +31,33 @@
                            FontSize="15"
                            TextColor="#EAF2FF"/>
 
-                    <Frame BackgroundColor="#EAF2FF"
-                           CornerRadius="18"
+                    <!-- ⭐ 动态状态提示 -->
+                    <Frame CornerRadius="18"
                            Padding="12,8"
                            HasShadow="False"
                            HorizontalOptions="Start">
 
+                        <Frame.Triggers>
+                            <DataTrigger TargetType="Frame"
+                                         Binding="{Binding StatusColor}"
+                                         Value="Green">
+                                <Setter Property="BackgroundColor" Value="#DCFCE7"/>
+                            </DataTrigger>
+
+                            <DataTrigger TargetType="Frame"
+                                         Binding="{Binding StatusColor}"
+                                         Value="Red">
+                                <Setter Property="BackgroundColor" Value="#FEE2E2"/>
+                            </DataTrigger>
+                        </Frame.Triggers>
+
                         <HorizontalStackLayout Spacing="8">
                             <Label Text="●"
-                                   TextColor="#22C55E"
+                                   TextColor="{Binding StatusColor}"
                                    FontSize="14"
                                    VerticalOptions="Center"/>
 
-                            <Label Text="Location Verified"
+                            <Label Text="{Binding StatusText}"
                                    FontSize="13"
                                    FontAttributes="Bold"
                                    TextColor="#1E3A5F"/>
@@ -53,12 +67,12 @@
                 </VerticalStackLayout>
             </Grid>
 
-            <!-- Main Content -->
+            <!-- Content -->
             <VerticalStackLayout Padding="24,24,24,42"
                                  Spacing="18"
                                  Margin="0,-42,0,0">
 
-                <!-- Current Class Card -->
+                <!-- Class Card -->
                 <Frame BackgroundColor="#FCFDFF"
                        CornerRadius="28"
                        Padding="22"
@@ -99,7 +113,7 @@
                     </Grid>
                 </Frame>
 
-                <!-- GPS Map Card -->
+                <!-- GPS Card -->
                 <Frame BackgroundColor="White"
                        CornerRadius="28"
                        Padding="20"
@@ -107,7 +121,7 @@
 
                     <VerticalStackLayout Spacing="18">
 
-                        <!-- Fake Map Area -->
+                        <!-- Fake Map -->
                         <Border BackgroundColor="#EAF2FF"
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 24"
@@ -115,7 +129,6 @@
 
                             <Grid>
 
-                                <!-- decorative map circles -->
                                 <Ellipse WidthRequest="120"
                                          HeightRequest="120"
                                          Fill="#DCEBFF"
@@ -127,22 +140,6 @@
                                          HeightRequest="70"
                                          Fill="#BFDBFE"
                                          Opacity="0.9"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="Center"/>
-
-                                <BoxView WidthRequest="260"
-                                         HeightRequest="4"
-                                         Color="#93C5FD"
-                                         Opacity="0.65"
-                                         Rotation="18"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="Center"/>
-
-                                <BoxView WidthRequest="180"
-                                         HeightRequest="4"
-                                         Color="#93C5FD"
-                                         Opacity="0.55"
-                                         Rotation="-25"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"/>
 
@@ -161,6 +158,7 @@
                                            VerticalOptions="Center"/>
                                 </Frame>
 
+                                <!-- ⭐ 实时地址 -->
                                 <Frame BackgroundColor="White"
                                        CornerRadius="14"
                                        Padding="10,6"
@@ -169,7 +167,7 @@
                                        VerticalOptions="End"
                                        Margin="0,0,0,16">
 
-                                    <Label Text="Campus Information Building"
+                                    <Label Text="{Binding Location}"
                                            FontSize="13"
                                            FontAttributes="Bold"
                                            TextColor="#1E3A5F"/>
@@ -178,37 +176,52 @@
                             </Grid>
                         </Border>
 
-                        <!-- Status -->
+                        <!-- ⭐ 状态区域（完全动态） -->
                         <Grid ColumnDefinitions="Auto,*"
                               ColumnSpacing="12">
 
-                            <Frame BackgroundColor="#DCFCE7"
-                                   WidthRequest="50"
+                            <!-- 图标 -->
+                            <Frame WidthRequest="50"
                                    HeightRequest="50"
                                    CornerRadius="16"
                                    Padding="0"
                                    HasShadow="False">
 
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame"
+                                                 Binding="{Binding StatusColor}"
+                                                 Value="Green">
+                                        <Setter Property="BackgroundColor" Value="#DCFCE7"/>
+                                    </DataTrigger>
+
+                                    <DataTrigger TargetType="Frame"
+                                                 Binding="{Binding StatusColor}"
+                                                 Value="Red">
+                                        <Setter Property="BackgroundColor" Value="#FEE2E2"/>
+                                    </DataTrigger>
+                                </Frame.Triggers>
+
                                 <Label Text="✓"
                                        FontSize="24"
-                                       TextColor="#16A34A"
+                                       TextColor="{Binding StatusColor}"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"/>
                             </Frame>
 
+                            <!-- 文本 -->
                             <VerticalStackLayout Grid.Column="1"
                                                  Spacing="4">
 
-                                <Label Text="Within allowed check-in range"
-                                       FontSize="16"
+                                <Label Text="{Binding StatusText}"
+                                       TextColor="{Binding StatusColor}"
                                        FontAttributes="Bold"
-                                       TextColor="#16A34A"/>
+                                       FontSize="16"/>
 
-                                <Label Text="Current Location: Campus Information Building"
+                                <Label Text="{Binding Location}"
                                        FontSize="13"
                                        TextColor="Gray"/>
 
-                                <Label Text="Approx. 20m from classroom"
+                                <Label Text="{Binding DistanceText}"
                                        FontSize="13"
                                        TextColor="Gray"/>
                             </VerticalStackLayout>
@@ -218,27 +231,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- Information Card -->
-                <Frame BackgroundColor="#EAF2FF"
-                       CornerRadius="20"
-                       Padding="18"
-                       HasShadow="False">
-
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="12">
-
-                        <Label Text="ℹ️"
-                               FontSize="24"
-                               VerticalOptions="Start"/>
-
-                        <Label Grid.Column="1"
-                               Text="Your GPS location is securely verified before attendance is recorded."
-                               FontSize="14"
-                               TextColor="#1E3A5F"/>
-                    </Grid>
-                </Frame>
-
-                <!-- Confirm Button -->
+                <!-- Button -->
                 <Button Text="📍 Confirm Check In"
                         Clicked="OnConfirmCheckInClicked"
                         BackgroundColor="#2563EB"

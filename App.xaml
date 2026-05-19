@@ -3,12 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Project"
              x:Class="Project.App">
+
     <Application.Resources>
         <ResourceDictionary>
+
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+           
+            <local:PercentToWidthConverter x:Key="PercentToWidth"/>
+
         </ResourceDictionary>
     </Application.Resources>
+
 </Application>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project"
              x:Class="Project.AttendanceHistoryPage"
              BackgroundColor="#F3F6FB"
              NavigationPage.HasNavigationBar="False">
@@ -10,7 +11,6 @@
 
             <!-- Header -->
             <Grid HeightRequest="185" Padding="26,28,26,24">
-
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#1E3A5F" Offset="0.0"/>
@@ -19,16 +19,13 @@
                 </Grid.Background>
 
                 <VerticalStackLayout Spacing="8" VerticalOptions="Center">
-
                     <Label Text="Attendance History"
                            FontSize="34"
                            FontAttributes="Bold"
                            TextColor="White"/>
-
                     <Label Text="Review your recent check-in records."
                            FontSize="15"
                            TextColor="#EAF2FF"/>
-
                 </VerticalStackLayout>
             </Grid>
 
@@ -36,70 +33,98 @@
             <VerticalStackLayout Padding="24,24,24,42"
                                  Spacing="18"
                                  Margin="0,-42,0,0">
-                <Frame BackgroundColor="White"
-                            CornerRadius="28"
-                             Padding="20"
-                         HasShadow="True">
 
-                    <VerticalStackLayout Spacing="12"
-                         HorizontalOptions="Center">
+                
+                <Frame BackgroundColor="White"
+                       CornerRadius="28"
+                       Padding="20"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="14">
 
                         <Label Text="Attendance Rate"
-               FontSize="16"
-               TextColor="Gray"
-               HorizontalOptions="Center"/>
+                               FontSize="14"
+                               TextColor="Gray"
+                               HorizontalOptions="Center"/>
 
-                        <Grid WidthRequest="120"
-              HeightRequest="120">
+                        <Label Text="{Binding AttendanceText}"
+                               FontSize="32"
+                               FontAttributes="Bold"
+                               TextColor="{Binding RateColor}"
+                               HorizontalOptions="Center"/>
 
-                            <Frame CornerRadius="60"
-                   BackgroundColor="#E5E7EB"
-                   HasShadow="False"/>
 
-                            <Frame CornerRadius="50"
-                   Margin="10"
-                   BackgroundColor="White"
-                   HasShadow="False"/>
+                        <Grid HeightRequest="12">
 
-                            <Label Text="{Binding AttendanceText}"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="{Binding RateColor}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+                            <!-- 背景条 -->
+                            <Frame BackgroundColor="#E5E7EB"
+                                   CornerRadius="6"
+                                   HasShadow="False"/>
+
+                            <!-- 进度条 -->
+                            <Frame CornerRadius="6"
+                                   HasShadow="False"
+                                   HorizontalOptions="Start"
+                                   WidthRequest="{Binding AttendanceRate, Converter={StaticResource PercentToWidth}}">
+
+                                <Frame.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#22C55E" Offset="0.0"/>
+                                        <GradientStop Color="#4ADE80" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Frame.Background>
+
+                            </Frame>
+
                         </Grid>
 
                     </VerticalStackLayout>
 
                 </Frame>
+
                 <Frame BackgroundColor="White"
-                     CornerRadius="28"
-                      Padding="20"
-                     HasShadow="True">
+       CornerRadius="28"
+       Padding="20"
+       HasShadow="True">
 
                     <Grid ColumnDefinitions="*,*,*"
-                     ColumnSpacing="12">
+          ColumnSpacing="12">
 
+                        <!-- Present -->
                         <VerticalStackLayout Grid.Column="0">
-                            <Label Text="Present" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="Present"
+                   FontSize="13"
+                   HorizontalOptions="Center"/>
+
                             <Label Text="{Binding PresentCount}"
                    FontSize="26"
+                   FontAttributes="Bold"
                    TextColor="#16A34A"
                    HorizontalOptions="Center"/>
                         </VerticalStackLayout>
 
+                        <!-- Late -->
                         <VerticalStackLayout Grid.Column="1">
-                            <Label Text="Late" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="Late"
+                   FontSize="13"
+                   HorizontalOptions="Center"/>
+
                             <Label Text="{Binding LateCount}"
                    FontSize="26"
+                   FontAttributes="Bold"
                    TextColor="#F97316"
                    HorizontalOptions="Center"/>
                         </VerticalStackLayout>
 
+                        <!-- Absent -->
                         <VerticalStackLayout Grid.Column="2">
-                            <Label Text="Absent" FontSize="13" HorizontalOptions="Center"/>
+                            <Label Text="Absent"
+                   FontSize="13"
+                   HorizontalOptions="Center"/>
+
                             <Label Text="{Binding AbsentCount}"
                    FontSize="26"
+                   FontAttributes="Bold"
                    TextColor="#EF4444"
                    HorizontalOptions="Center"/>
                         </VerticalStackLayout>
@@ -109,97 +134,105 @@
 
                 <!-- Title -->
                 <Label Text="Recent Records"
-                       FontSize="18"
+                       FontSize="20"
                        FontAttributes="Bold"
                        TextColor="#1E3A5F"/>
 
-                <!-- ⭐ Data Binding -->
-                <CollectionView ItemsSource="{Binding Records}">
+                <!-- ⭐ 优化列表 -->
+                <CollectionView ItemsSource="{Binding Records}"
+                                Margin="0,6,0,0">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
                             <Frame BackgroundColor="White"
-                                   CornerRadius="24"
-                                   Padding="18"
+                                   CornerRadius="20"
+                                   Padding="16"
                                    HasShadow="True"
-                                   Margin="0,0,0,12">
+                                   Margin="0,0,0,14">
 
                                 <Grid ColumnDefinitions="Auto,*"
                                       ColumnSpacing="14">
 
-                                    <!-- Icon -->
-                                    <Frame BackgroundColor="#EAF2FF"
-                                           CornerRadius="16"
-                                           WidthRequest="52"
-                                           HeightRequest="52"
+                                    <!-- 左图标（状态联动） -->
+                                    <Frame CornerRadius="14"
+                                           WidthRequest="48"
+                                           HeightRequest="48"
                                            Padding="0"
                                            HasShadow="False">
 
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding Status}"
+                                                         Value="Present">
+                                                <Setter Property="BackgroundColor" Value="#DCFCE7"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding Status}"
+                                                         Value="Late">
+                                                <Setter Property="BackgroundColor" Value="#FFEDD5"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Frame"
+                                                         Binding="{Binding Status}"
+                                                         Value="Absent">
+                                                <Setter Property="BackgroundColor" Value="#FEE2E2"/>
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+
                                         <Label Text="📍"
-                                               FontSize="24"
+                                               FontSize="20"
                                                HorizontalOptions="Center"
                                                VerticalOptions="Center"/>
                                     </Frame>
 
-                                    <!-- Content -->
+                                    <!-- 内容 -->
                                     <VerticalStackLayout Grid.Column="1"
                                                          Spacing="6">
 
-                                        <!-- ⭐ 第一行：课程 + 状态 -->
                                         <Grid ColumnDefinitions="*,Auto">
 
-                                            <!-- 课程名 -->
                                             <Label Text="{Binding CourseName}"
-                                                   FontSize="17"
+                                                   FontSize="16"
                                                    FontAttributes="Bold"
                                                    TextColor="#1E3A5F"/>
 
-                                            <!-- 状态 -->
                                             <Frame Grid.Column="1"
-                                                   CornerRadius="14"
-                                                   Padding="10,5"
+                                                   CornerRadius="12"
+                                                   Padding="8,3"
                                                    HasShadow="False">
 
                                                 <Frame.Triggers>
-
                                                     <DataTrigger TargetType="Frame"
                                                                  Binding="{Binding Status}"
                                                                  Value="Present">
                                                         <Setter Property="BackgroundColor" Value="#DCFCE7"/>
                                                     </DataTrigger>
-
                                                     <DataTrigger TargetType="Frame"
                                                                  Binding="{Binding Status}"
                                                                  Value="Late">
                                                         <Setter Property="BackgroundColor" Value="#FFEDD5"/>
                                                     </DataTrigger>
-
                                                     <DataTrigger TargetType="Frame"
                                                                  Binding="{Binding Status}"
                                                                  Value="Absent">
                                                         <Setter Property="BackgroundColor" Value="#FEE2E2"/>
                                                     </DataTrigger>
-
                                                 </Frame.Triggers>
 
                                                 <Label Text="{Binding Status}"
-                                                       FontSize="12"
+                                                       FontSize="11"
                                                        FontAttributes="Bold"
                                                        HorizontalOptions="Center"/>
-
                                             </Frame>
 
                                         </Grid>
 
-                                        <!-- 时间 -->
                                         <Label Text="{Binding Time}"
-                                               FontSize="13"
+                                               FontSize="12"
                                                TextColor="Gray"/>
 
-                                        <!-- ⭐ 地址（ -->
                                         <Label Text="{Binding Location}"
-                                               FontSize="13"
+                                               FontSize="12"
                                                TextColor="#2563EB"/>
 
                                     </VerticalStackLayout>
@@ -217,5 +250,4 @@
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
